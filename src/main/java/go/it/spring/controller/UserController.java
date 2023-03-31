@@ -4,17 +4,15 @@ import go.it.spring.entity.User;
 import go.it.spring.mapper.UserMapper;
 import go.it.spring.model.UserDTO;
 import go.it.spring.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
-//@Controller
+import static go.it.spring.util.UserValidator.validate;
+
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -23,76 +21,61 @@ public class UserController {
     private final UserService userService;
 
 //    @RequestMapping(value = "/user", method = {RequestMethod.GET})
-//    public ModelAndView getUser() {
-//        ModelAndView result = new ModelAndView("user/current");
-////mapping request for service layer
+//    public List<UserDTO> getUsersByName(String name) {
 //
-//        User user = userService.get();
+//        List<User> users = userService.findAllByName(name);
 //
-//        result.addObject("user", user);
+//        return users.stream()
+//                .map(UserMapper::from)
+//                .collect(Collectors.toList());
 //
-//
-//        return result;
 //    }
 
     @GetMapping
-    public ModelAndView getUser() {
-        ModelAndView result = new ModelAndView("user/current");
-//mapping request for service layer
+    public List<UserDTO> findAll(@RequestParam(required = false, name = "firstname") String firstName) {
+        List<User> users = userService.findAllByFirsName(firstName);
 
-        User user = userService.get();
-
-        result.addObject("user", user);
-
-
-        return result;
+        return users.stream()
+                .map(UserMapper::from)
+                .collect(Collectors.toList());
     }
 
-    @GetMapping(path = "/{id}/sometext/{name}",
-            consumes = "application/json",
-            produces = "application/xml")
-    public ModelAndView getUserById(@PathVariable String id,
-                                    @PathVariable String name) {
-
-        ModelAndView result = new ModelAndView("user/current");
-
-        User user = userService.get(id);
-        user.setName(name);
-
-        result.addObject("user", user);
-
-        return result;
-    }
-
-//    @PostMapping
-//    public ModelAndView createUser(
-////            @RequestHeader("Content-Type") String contentType,
-//            @CookieValue("mvc") String mvcCookie,
-//            @RequestBody UserDTO dto) {
+//    @GetMapping(path = "/{id}/sometext/{name}",
+//            consumes = "application/json",
+//            produces = "application/xml")
+//    public ModelAndView getUserById(@PathVariable String id,
+//                                    @PathVariable String name) {
+//
 //        ModelAndView result = new ModelAndView("user/current");
-////mapping request for service layer
 //
-//        User user = UserMapper.from(dto);
+//        User user = userService.get(id);
+////        user.setName(name);
 //
-//        user = userService.create(user);
-//
-//        dto = UserMapper.from(user);
-//
-//        dto.setName(mvcCookie);
-//
-//        result.addObject("user", dto);
+//        result.addObject("user", user);
 //
 //        return result;
 //    }
 
     @PostMapping
-    public UserDTO createUser(@RequestBody UserDTO dto) {
+    public UserDTO create(@RequestBody UserDTO dto) {
+        validate(dto);
+
         User user = UserMapper.from(dto);
 
         user = userService.create(user);
 
         return UserMapper.from(user);
     }
+
+
+//    @PostMapping
+//    public UserDTO createUser(@RequestBody UserDTO dto) {
+//        User user = UserMapper.from(dto);
+//
+//        user = userService.create(user);
+//
+//        return UserMapper.from(user);
+//    }
 
 //    @PostMapping
 //    public void createUser(HttpServletRequest request,

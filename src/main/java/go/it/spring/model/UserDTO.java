@@ -7,6 +7,8 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserDTO {
-    String id;
-    String name;
+    int id;
+    String firstName;
+    String lastName;
+    int age;
 }

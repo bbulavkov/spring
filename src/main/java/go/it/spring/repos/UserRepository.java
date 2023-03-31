@@ -1,21 +1,20 @@
 package go.it.spring.repos;
 
 import go.it.spring.entity.User;
-import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
+import java.util.List;
+
 
 @Repository
-@RequiredArgsConstructor
-public class UserRepository {
+public interface UserRepository extends CrudRepository<User, Integer> {
+    List<User> findAllByFirstName(String firstName);
 
-    public User get() {
-        return new User();
-    }
+//    List<User> findAllByEmail(String email);
 
-    public User create(User user) {
-        user.setId(UUID.randomUUID().toString());
-        return user;
-    }
+//    List<User> findAllByLastNameAndAge(String lastName, int age, Pageable pageable);
+//
+//    List<User> findAllByLastNameAndAge(String lastName, int age, Sort sort);
 }

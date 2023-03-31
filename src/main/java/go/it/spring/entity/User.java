@@ -1,26 +1,20 @@
 package go.it.spring.entity;
 
 import go.it.spring.model.UserDTO;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 @Data
+@Entity
+@Table(name = "users", schema = "java_lessons")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User extends Entity {
-    String name;
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                '}';
-    }
-
-
-    //.... @ManyToMany , @ManyToMany, ....
-
-
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
+    String firstName;
+    String lastName;
+    int age;
 }
