@@ -4,11 +4,12 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Set;
+
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserDTO {
+public class CourseDTO {
     int id;
-    String firstName;
-    String lastName;
-    int age;
+    Set<Integer> userIds;
+    String name;
 }

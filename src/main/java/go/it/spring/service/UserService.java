@@ -22,10 +22,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -38,15 +37,13 @@ public class UserService {
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    @PostConstruct
-    public void init() {
-
-        System.out.println("CLASS " + repository.getClass());
-    }
-
     public List<User> findAll() {
         return StreamSupport.stream(repository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
+    }
+
+    public Set<User> findAllByIds(Set<Integer> ids) {
+        return repository.findAllByIdIn(ids);
     }
 
     public User create(User user) {

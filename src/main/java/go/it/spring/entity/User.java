@@ -1,10 +1,12 @@
 package go.it.spring.entity;
 
-import go.it.spring.model.UserDTO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -17,4 +19,13 @@ public class User {
     String firstName;
     String lastName;
     int age;
+
+    @JoinTable(
+            schema = "java_lessons",
+            name = "users_courses",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    @ManyToMany
+    private Set<Course> courses = new HashSet<>();
 }

@@ -8,11 +8,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
-//    List<User> findAllByFirstName(String firstName);
+    Set<User> findAllByIdIn(Set<Integer> ids);
 
     @Query("from User u where u.firstName = :firstName ")
     List<User> findAllByFirstName(String firstName);
