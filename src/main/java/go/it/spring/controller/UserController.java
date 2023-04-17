@@ -8,6 +8,7 @@ import go.it.spring.service.AuthService;
 import go.it.spring.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -31,8 +32,9 @@ public class UserController {
 
 
     @GetMapping
+    @PreAuthorize("hasRole('READ')")
     public List<UserDTO> findAll(@RequestParam(required = false, name = "firstname") String firstName) {
-        authService.validateAuthority("ROLE_READ");
+//        authService.validateAuthority("ROLE_READ");
 
         List<User> users = userService.findAll();
 
@@ -44,7 +46,6 @@ public class UserController {
 
     @GetMapping("/between")
     public Long findAll(@RequestParam int min, @RequestParam int max) {
-
         return userService.countBetween(min, max);
     }
 
