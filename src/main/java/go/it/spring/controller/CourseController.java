@@ -1,18 +1,13 @@
 package go.it.spring.controller;
 
 import go.it.spring.entity.Course;
-import go.it.spring.entity.User;
 import go.it.spring.mapper.CourseMapper;
-import go.it.spring.mapper.UserMapper;
 import go.it.spring.model.CourseDTO;
-import go.it.spring.model.UserDTO;
 import go.it.spring.service.CourseService;
-import go.it.spring.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
