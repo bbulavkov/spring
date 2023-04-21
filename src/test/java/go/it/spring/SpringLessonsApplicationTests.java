@@ -8,6 +8,7 @@ class SpringLessonsApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("Bla");
 	}
 
 }
